@@ -1,0 +1,11 @@
+name: bovedadocs-backend
+
+services:
+  backend:
+    build: .
+    container_name: bovedadocs-backend
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+    restart: unless-stopped
