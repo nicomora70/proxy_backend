@@ -22,6 +22,7 @@ public class LoggingProxy extends DocumentProxy {
     public List<DocumentSummary> list(User user, RequestContext ctx) {
         long start = System.nanoTime();
         try {
+            ctx.add("log", "LIST captured");
             List<DocumentSummary> documents = next.list(user, ctx);
             audit.add(user, "LIST", null, "OK", documents.size() + " records returned", elapsed(start));
             return documents;
@@ -35,6 +36,7 @@ public class LoggingProxy extends DocumentProxy {
     public DocumentContent read(User user, String documentId, RequestContext ctx) {
         long start = System.nanoTime();
         try {
+            ctx.add("log", "READ " + documentId + " captured");
             DocumentContent content = next.read(user, documentId, ctx);
             audit.add(user, "READ", documentId, "OK", "content delivered", elapsed(start));
             return content;
@@ -48,6 +50,7 @@ public class LoggingProxy extends DocumentProxy {
     public DocumentSummary write(User user, String documentId, String content, RequestContext ctx) {
         long start = System.nanoTime();
         try {
+            ctx.add("log", "WRITE " + documentId + " captured");
             DocumentSummary summary = next.write(user, documentId, content, ctx);
             audit.add(user, "WRITE", documentId, "OK", "content updated", elapsed(start));
             return summary;
@@ -61,6 +64,7 @@ public class LoggingProxy extends DocumentProxy {
     public void delete(User user, String documentId, RequestContext ctx) {
         long start = System.nanoTime();
         try {
+            ctx.add("log", "DELETE " + documentId + " captured");
             next.delete(user, documentId, ctx);
             audit.add(user, "DELETE", documentId, "OK", "record removed", elapsed(start));
         } catch (RuntimeException exception) {
