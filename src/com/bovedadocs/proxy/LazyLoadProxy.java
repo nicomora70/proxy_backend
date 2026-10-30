@@ -19,6 +19,7 @@ public class LazyLoadProxy extends DocumentProxy {
 
     @Override
     public List<DocumentSummary> list(User user, RequestContext ctx) {
+        ctx.add("lazy", "metadata request does not load content");
         return next.list(user, ctx);
     }
 

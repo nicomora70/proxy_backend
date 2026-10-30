@@ -19,6 +19,7 @@ public class CacheProxy extends DocumentProxy {
 
     @Override
     public List<DocumentSummary> list(User user, RequestContext ctx) {
+        ctx.add("cache", "metadata request bypasses content cache");
         return next.list(user, ctx);
     }
 
