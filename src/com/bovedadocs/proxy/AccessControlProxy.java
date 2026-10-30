@@ -22,6 +22,7 @@ public class AccessControlProxy extends DocumentProxy {
 
     @Override
     public List<DocumentSummary> list(User user, RequestContext ctx) {
+        ctx.add("access", "evaluating policy for " + user.getName());
         List<DocumentSummary> all = next.list(user, ctx);
         List<DocumentSummary> visible = new ArrayList<>();
         for (DocumentSummary document : all) {
